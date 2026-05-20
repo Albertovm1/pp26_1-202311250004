@@ -8,6 +8,6 @@ typedef struct {
 
 Microfone* criar_microfone(int id);
 void configurar_tempo(Microfone* m, int segundos);
-int ligar_microfone(Microfone* m); // Adicione se necessário
+int ligar_microfone(Microfone* m);
 
 #endif

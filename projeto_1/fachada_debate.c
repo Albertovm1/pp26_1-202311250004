@@ -4,43 +4,48 @@
 #include <stdbool.h>
 #include "gerenciador_debate.h"
 #include "candidato.h"
+#include "eleitor.h"
 #include "logger.h"
+#include "microfone.h"
 
-// Lista estática de candidatos (gerenciada internamente)
 static Candidato* banco_candidatos[10];
 static int total_candidatos = 0;
 
 int inicializar_sistema() {
-    registrar_log("Fachada: Inicializando componentes...");
+    banco_candidatos[0] = criar_candidato("Candidato A", criar_microfone(1)); // 1s
+    banco_candidatos[1] = criar_candidato("Candidato B", criar_microfone(1));
+    total_candidatos = 2;
+    return 1;
+}
+
+void vincular_eleitor_padrao() {
+    Eleitor* e1 = criar_eleitor(1, "Joao Silva");
+    Eleitor* e2 = criar_eleitor(2, "Maria Souza");
     
-    // Inicialização simples para exemplo
-    banco_candidatos[0] = criar_candidato("Candidato A", criar_microfone(1));
-    banco_candidatos[1] = criar_candidato("Candidato B", criar_microfone(2));
-    banco_candidatos[2] = criar_candidato("Candidato C", criar_microfone(3));
+    Observer* obs1 = (Observer*)malloc(sizeof(Observer));
+    obs1->contexto = e1;
+    obs1->atualizar = atualizar_eleitor;
+
+    Observer* obs2 = (Observer*)malloc(sizeof(Observer));
+    obs2->contexto = e2;
+    obs2->atualizar = atualizar_eleitor;
     
-    total_candidatos = 3;
-    
-    // Verificação de segurança
     for(int i = 0; i < total_candidatos; i++) {
-        if (banco_candidatos[i] == NULL) return 0;
+        adicionar_eleitor(banco_candidatos[i], obs1);
+        adicionar_eleitor(banco_candidatos[i], obs2);
     }
-    
-    return 1; // Sucesso
 }
 
 void realizar_sorteio_dinamico() {
     Candidato* inq = NULL;
     Candidato* inqdo = NULL;
 
-    // Busca inquiridor (quem ainda não perguntou)
     for(int i = 0; i < total_candidatos; i++) {
         if (!banco_candidatos[i]->ja_perguntou) {
             inq = banco_candidatos[i];
             break;
         }
     }
-
-    // Busca inquirido (o próximo disponível que não é o inquiridor)
     for(int i = 0; i < total_candidatos; i++) {
         if (banco_candidatos[i] != inq) {
             inqdo = banco_candidatos[i];
@@ -49,24 +54,11 @@ void realizar_sorteio_dinamico() {
     }
 
     if (inq && inqdo) {
-        printf(">> Sorteio: Inquiridor: %s | Inquirido: %s\n", inq->nome, inqdo->nome);
+        printf("\n>> Sorteio: Inquiridor: %s | Inquirido: %s\n", inq->nome, inqdo->nome);
         executar_interacao(inq, inqdo);
-        inq->ja_perguntou = true; // Marca como inquiridor usado
-    } else {
-        printf(">> Erro: Não foi possível realizar sorteio (todos já perguntaram?).\n");
+        inq->ja_perguntou = true;
     }
 }
 
-void executar_debate() {
-    realizar_sorteio_dinamico();
-}
-
-void finalizar_sistema() {
-    registrar_log("Fachada: Liberando recursos...");
-    for(int i = 0; i < total_candidatos; i++) {
-        if (banco_candidatos[i]) {
-            free(banco_candidatos[i]->microfone);
-            free(banco_candidatos[i]);
-        }
-    }
-}
+void executar_debate() { realizar_sorteio_dinamico(); }
+void finalizar_sistema() { /* ... free memoria ... */ }

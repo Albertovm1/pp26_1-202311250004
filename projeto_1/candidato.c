@@ -4,26 +4,28 @@
 #include "candidato.h"
 
 Candidato* criar_candidato(const char* nome, Microfone* mic) {
-    Candidato* c = (Candidato*)malloc(sizeof(Candidato));
+    Candidato* c = (Candidato*)calloc(1, sizeof(Candidato));
     if (!c) return NULL;
     
     strncpy(c->nome, nome, 50);
-    c->ja_perguntou = false; // Inicializa como false
-    c->total_eleitores = 0;
     c->microfone = mic;
+    c->ja_perguntou = false;
+    c->total_eleitores = 0; 
     return c;
 }
 
 void adicionar_eleitor(Candidato* c, Observer* obs) {
-    if (c && c->total_eleitores < MAX_ELEITORES) {
-        c->eleitores[c->total_eleitores++] = obs;
+    if (c->total_eleitores < 10) {
+        // Armazena o ponteiro do observer
+        c->eleitores[c->total_eleitores] = obs;
+        c->total_eleitores++;
     }
 }
 
 void notificar_eleitores(const Candidato* c, const char* msg) {
-    if (!c) return;
     for (int i = 0; i < c->total_eleitores; i++) {
-        // Notifica cada eleitor observador
-        c->eleitores[i]->atualizar(c->eleitores[i]->contexto, msg);
+        if (c->eleitores[i] != NULL) {
+            c->eleitores[i]->atualizar(c->eleitores[i]->contexto, msg);
+        }
     }
 }

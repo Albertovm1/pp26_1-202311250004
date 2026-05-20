@@ -10,7 +10,8 @@ typedef enum {
     FASE_TREPLICA
 } FaseDebate;
 
+const char* nome_da_fase(FaseDebate fase); 
+
 void executar_interacao(Candidato* inquiridor, Candidato* inquirido);
-const char* nome_da_fase(FaseDebate fase);
 
 #endif

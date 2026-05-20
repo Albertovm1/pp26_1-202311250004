@@ -6,7 +6,7 @@ Microfone* criar_microfone(int id) {
     Microfone* m = (Microfone*)malloc(sizeof(Microfone));
     if (m) {
         m->id = id;
-        m->tempo_limite = 60; // Agora o compilador conhece esses membros
+        m->tempo_limite = 5; // Tempo padrão de 5 segundos
     }
     return m;
 }

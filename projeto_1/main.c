@@ -5,23 +5,16 @@
 int main() {
     inicializar_sistema();
     resetar_log();
+    vincular_eleitor_padrao();
+
+    printf("--- CONTROLE DE DEBATE ---\n");
+    printf("1. Iniciar rodada\n2. Sair\n");
     
     int opcao;
-    printf("--- CONTROLE DE DEBATE ---\n");
-    printf("1. Iniciar rodada de debate\n");
-    printf("2. Sair\n");
-    
     while(1) {
         printf("\nEscolha: ");
-        if(scanf("%d", &opcao) != 1) break; 
-        
-        if (opcao == 1) {
-            executar_debate();
-        } else {
-            break;
-        }
+        if (scanf("%d", &opcao) != 1 || opcao != 1) break;
+        executar_debate();
     }
-    
-    finalizar_sistema();
     return 0;
 }
