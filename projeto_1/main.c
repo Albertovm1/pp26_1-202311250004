@@ -3,8 +3,8 @@
 #include "logger.h"
 
 int main() {
-    inicializar_sistema();
     resetar_log();
+    inicializar_sistema();
     vincular_eleitor_padrao();
 
     printf("--- CONTROLE DE DEBATE ---\n");

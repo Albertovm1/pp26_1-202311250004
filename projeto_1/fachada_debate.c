@@ -12,28 +12,52 @@ static Candidato* banco_candidatos[10];
 static int total_candidatos = 0;
 
 int inicializar_sistema() {
-    banco_candidatos[0] = criar_candidato("Candidato A", criar_microfone(1)); // 1s
-    banco_candidatos[1] = criar_candidato("Candidato B", criar_microfone(1));
+    registrar_log("Fachada: Inicializando componentes com Builder...");
+
+    // Construindo o Candidato A passo a passo
+    CandidatoBuilder* b1 = iniciar_candidato_builder();
+    builder_com_nome(b1, "Candidato A");
+    builder_com_microfone(b1, criar_microfone(5)); // Define 5 segundos
+    banco_candidatos[0] = builder_construir(b1);
+
+    // Construindo o Candidato B passo a passo
+    CandidatoBuilder* b2 = iniciar_candidato_builder();
+    builder_com_nome(b2, "Candidato B");
+    builder_com_microfone(b2, criar_microfone(5));
+    banco_candidatos[1] = builder_construir(b2);
+
     total_candidatos = 2;
     return 1;
 }
 
 void vincular_eleitor_padrao() {
-    Eleitor* e1 = criar_eleitor(1, "Joao Silva");
-    Eleitor* e2 = criar_eleitor(2, "Maria Souza");
-    
+    // 1. Criamos o nosso Eleitor Protótipo (o modelo base)
+    Eleitor* eleitor_base = criar_eleitor(0, "Prototipo Base");
+
+    // 2. Usamos o Prototype para clonar o modelo base mudando apenas o necessário
+    Eleitor* e1 = clonar_eleitor(eleitor_base, 1, "Joao Silva");
+    Eleitor* e2 = clonar_eleitor(eleitor_base, 2, "Maria Souza");
+    Eleitor* e3 = clonar_eleitor(eleitor_base, 3, "Carlos Andrade"); // Fácil de adicionar mais!
+
+    // Criando os invólucros do Observer para cada clone
     Observer* obs1 = (Observer*)malloc(sizeof(Observer));
-    obs1->contexto = e1;
-    obs1->atualizar = atualizar_eleitor;
+    obs1->contexto = e1; obs1->atualizar = atualizar_eleitor;
 
     Observer* obs2 = (Observer*)malloc(sizeof(Observer));
-    obs2->contexto = e2;
-    obs2->atualizar = atualizar_eleitor;
+    obs2->contexto = e2; obs2->atualizar = atualizar_eleitor;
+
+    Observer* obs3 = (Observer*)malloc(sizeof(Observer));
+    obs3->contexto = e3; obs3->atualizar = atualizar_eleitor;
     
+    // Vincula todos os clones aos candidatos
     for(int i = 0; i < total_candidatos; i++) {
         adicionar_eleitor(banco_candidatos[i], obs1);
         adicionar_eleitor(banco_candidatos[i], obs2);
+        adicionar_eleitor(banco_candidatos[i], obs3);
     }
+
+    // Como usamos o protótipo apenas como molde, podemos liberá-lo se não formos mais usar
+    free(eleitor_base);
 }
 
 void realizar_sorteio_dinamico() {

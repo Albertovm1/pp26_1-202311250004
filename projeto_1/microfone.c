@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include "microfone.h"
 
-Microfone* criar_microfone(int id) {
+Microfone* criar_microfone(int tempo) { // Mude o nome para fazer sentido
     Microfone* m = (Microfone*)malloc(sizeof(Microfone));
     if (m) {
-        m->id = id;
-        m->tempo_limite = 5; // Tempo padrão de 5 segundos
+        m->id = 1;              // Pode deixar um ID padrão fixo
+        m->tempo_limite = tempo; // Agora sim o tempo é dinâmico!
     }
     return m;
 }
