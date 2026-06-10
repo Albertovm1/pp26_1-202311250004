@@ -1,16 +1,32 @@
 --- NOVO DEBATE INICIADO ---
-[2026-06-03 00:25:52] Fachada: Inicializando componentes com Builder...
-[2026-06-03 00:25:52] Builder: Candidato 'Candidato A' construido com sucesso.
-[2026-06-03 00:25:52] Builder: Candidato 'Candidato B' construido com sucesso.
-[2026-06-03 00:25:52] Prototype: Eleitor ID 1 ('Joao Silva') clonado a partir do modelo.
-[2026-06-03 00:25:52] Prototype: Eleitor ID 2 ('Maria Souza') clonado a partir do modelo.
-[2026-06-03 00:25:52] Prototype: Eleitor ID 3 ('Carlos Andrade') clonado a partir do modelo.
-[2026-06-03 00:25:54] Debate: Candidato 'Candidato A' assumiu a palavra na fase de PERGUNTA.
-[2026-06-03 00:25:54] Hardware: Microfone ID 1 ligado para Candidato A por 5 segundos.
-[2026-06-03 00:25:59] Debate: Candidato 'Candidato B' assumiu a palavra na fase de RESPOSTA.
-[2026-06-03 00:25:59] Hardware: Microfone ID 1 ligado para Candidato B por 5 segundos.
-[2026-06-03 00:26:04] Debate: Candidato 'Candidato A' assumiu a palavra na fase de RÉPLICA.
-[2026-06-03 00:26:04] Hardware: Microfone ID 1 ligado para Candidato A por 5 segundos.
-[2026-06-03 00:26:09] Debate: Candidato 'Candidato B' assumiu a palavra na fase de TRÉPLICA.
-[2026-06-03 00:26:09] Hardware: Microfone ID 1 ligado para Candidato B por 5 segundos.
-[2026-06-03 00:26:14] Debate: Fim da interacao da rodada entre os candidatos.
+[2026-06-10 00:02:44] Fachada: Inicializando componentes com Builder...
+[2026-06-10 00:02:44] Builder: Candidato 'Candidato A' construido com sucesso.
+[2026-06-10 00:02:44] Builder: Candidato 'Candidato B' construido com sucesso.
+[2026-06-10 00:02:44] Prototype: Eleitor ID 1 ('Joao Silva') clonado a partir do modelo.
+[2026-06-10 00:02:44] Prototype: Eleitor ID 2 ('Maria Souza') clonado a partir do modelo.
+[2026-06-10 00:02:44] Prototype: Eleitor ID 3 ('Carlos Andrade') clonado a partir do modelo.
+[2026-06-10 00:02:45] [PADRAO STATE] Contexto do Gerenciador de Debate configurado com sucesso.
+[2026-06-10 00:02:45] ======================================================================
+[2026-06-10 00:02:45] [PADRAO STATE] Gerenciador iniciou o -> ESTADO NORMAL
+[2026-06-10 00:02:45] ======================================================================
+[2026-06-10 00:02:45] Fluxo Comum: Candidato 'Candidato A' assumiu a palavra na fase de PERGUNTA.
+[2026-06-10 00:02:50] Fluxo Comum: Candidato 'Candidato B' assumiu a palavra na fase de RESPOSTA.
+[2026-06-10 00:02:55] [HARDWARE] Botao DR integrado ao microfone acionado pelo politico: Candidato A.
+[2026-06-10 00:02:55] [FILA CRONOLOGICA] Gerente aceitou a solicitacao. Armazenado na posicao 1 para: Candidato A.
+[2026-06-10 00:02:55] Fluxo Comum: Candidato 'Candidato A' assumiu a palavra na fase de REPLICA.
+[2026-06-10 00:03:00] Fluxo Comum: Candidato 'Candidato B' assumiu a palavra na fase de TREPLICA.
+[2026-06-10 00:03:05] [HARDWARE] Botao DR integrado ao microfone acionado pelo politico: Candidato B.
+[2026-06-10 00:03:05] [FILA CRONOLOGICA] Gerente aceitou a solicitacao. Armazenado na posicao 2 para: Candidato B.
+[2026-06-10 00:03:05] [PADRAO STATE] Fim do ciclo de debate normal (Pergunta-Resposta-Replica-Treplica).
+[2026-06-10 00:03:05] [PADRAO STATE] Gerente avaliando concessao de Direitos de Resposta acumulados...
+[2026-06-10 00:03:05] [PADRAO STATE] Transicao detectada! Fila com 2 pedido(s). Alterando para: ESTADO DIREITO DE RESPOSTA.
+[2026-06-10 00:03:05] ======================================================================
+[2026-06-10 00:03:05] [PADRAO STATE] Gerenciador iniciou o -> ESTADO DIREITO DE RESPOSTA
+[2026-06-10 00:03:05] ======================================================================
+[2026-06-10 00:03:05] [FILA CRONOLOGICA] Atendendo solicitacao 1 de 2: Concedendo palavra a 'Candidato A'.
+[2026-06-10 00:03:11] [BLOQUEIO STATE] Politico 'Candidato B' pressionou o botao DR, mas a acao foi REJEITADA (Bloqueio anti-loop ativo).
+[2026-06-10 00:03:11] [FILA CRONOLOGICA] Atendendo solicitacao 2 de 2: Concedendo palavra a 'Candidato B'.
+[2026-06-10 00:03:18] [BLOQUEIO STATE] Politico 'Candidato A' pressionou o botao DR, mas a acao foi REJEITADA (Bloqueio anti-loop ativo).
+[2026-06-10 00:03:18] [PADRAO STATE] Todos os Direitos de Resposta do bloco foram processados.
+[2026-06-10 00:03:18] [PADRAO STATE] Transicao detectada! Retornando para: ESTADO NORMAL.
+[2026-06-10 00:03:18] ======================================================================

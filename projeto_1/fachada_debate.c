@@ -17,7 +17,7 @@ int inicializar_sistema() {
     // Construindo o Candidato A passo a passo
     CandidatoBuilder* b1 = iniciar_candidato_builder();
     builder_com_nome(b1, "Candidato A");
-    builder_com_microfone(b1, criar_microfone(5)); // Define 5 segundos
+    builder_com_microfone(b1, criar_microfone(5)); // Define 5 segundos para o fluxo normal
     banco_candidatos[0] = builder_construir(b1);
 
     // Construindo o Candidato B passo a passo
@@ -37,7 +37,7 @@ void vincular_eleitor_padrao() {
     // 2. Usamos o Prototype para clonar o modelo base mudando apenas o necessário
     Eleitor* e1 = clonar_eleitor(eleitor_base, 1, "Joao Silva");
     Eleitor* e2 = clonar_eleitor(eleitor_base, 2, "Maria Souza");
-    Eleitor* e3 = clonar_eleitor(eleitor_base, 3, "Carlos Andrade"); // Fácil de adicionar mais!
+    Eleitor* e3 = clonar_eleitor(eleitor_base, 3, "Carlos Andrade");
 
     // Criando os invólucros do Observer para cada clone
     Observer* obs1 = (Observer*)malloc(sizeof(Observer));
@@ -78,9 +78,23 @@ void realizar_sorteio_dinamico() {
     }
 
     if (inq && inqdo) {
-        printf("\n>> Sorteio: Inquiridor: %s | Inquirido: %s\n", inq->nome, inqdo->nome);
-        executar_interacao(inq, inqdo);
+        printf("\n======================================================================\n");
+        printf(">> SORTEIO DE RODADA: Inquiridor: %s | Inquirido: %s <<\n", inq->nome, inqdo->nome);
+        printf("======================================================================\n");
+        
+        GerenciadorDebate gerenciador;
+        inicializar_gerenciador(&gerenciador, inq, inqdo);
+        
+        // Dispara o motor de estados que gerencia o fluxo normal e as interrupções de DR
+        BlackBox_Executar(&gerenciador);
+        
         inq->ja_perguntou = true;
+    } else {
+        // Reinicia o ciclo para permitir novas rodadas na apresentação
+        for(int i = 0; i < total_candidatos; i++) {
+            banco_candidatos[i]->ja_perguntou = false;
+        }
+        printf("\n[Sistema] Todos os candidatos já perguntaram. Resetando histórico para novas rodadas!\n");
     }
 }
 
